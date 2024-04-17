@@ -1,0 +1,4 @@
+enter eth_ws:roslaunch orb_slam_2_ros run_orb_slam_2_d435i.launch
+cd realsense_ws roslaunch realsense2_camera rs_camera.launch enable_pointcloud:=true align_depth:=true
+roslaunch voxblox_ros rgbd_dataset_d435i.launch
+save:rosservice call /voxblox_node/generate_mesh "{}"
