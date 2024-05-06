@@ -48,10 +48,21 @@ glog_catkin cv_bridge_new eigen_catkin eigen_checks gflags_catkin glog_catkin mi
 
 修改run_orb_slam_2_d435i.launch中ORBvoc.txt、RealSense_D435i.yaml的位置
 
+在rgbd_dataset_d435i.launch文件中第10行添加如下代码（降噪）
+  <!-- Run a VoxelGrid filter to clean NaNs and downsample the data -->
+  <node pkg="nodelet" type="nodelet" name="point_cloud_pass_through" args="load pcl/PassThrough pcl_manager" output="screen">
+    <remap from="~input" to="/camera/depth/color/points" />
+    <rosparam>
+      filter_field_name: z
+      filter_limit_min: 0.01
+      filter_limit_max: 1.0
+      filter_limit_negative: False
+    </rosparam>
+  </node>
+
 #运行
 roslaunch orb_slam_2_ros run_orb_slam_2_d435i.launch
 cd realsense_ws roslaunch realsense2_camera rs_camera.launch enable_pointcloud:=true align_depth:=true
 roslaunch voxblox_ros rgbd_dataset_d435i.launch
 rviz
 save:rosservice call /voxblox_node/generate_mesh "{}"
-
