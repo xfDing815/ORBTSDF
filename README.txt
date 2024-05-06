@@ -45,3 +45,13 @@ ffmpeg.cpp中第37行 namespace pangolin上面加上
 
 #这些缺损的文件可以网上下载，或者直接拷贝 
 glog_catkin cv_bridge_new eigen_catkin eigen_checks gflags_catkin glog_catkin minkindr minkindr_ros
+
+修改run_orb_slam_2_d435i.launch中ORBvoc.txt、RealSense_D435i.yaml的位置
+
+#运行
+roslaunch orb_slam_2_ros run_orb_slam_2_d435i.launch
+cd realsense_ws roslaunch realsense2_camera rs_camera.launch enable_pointcloud:=true align_depth:=true
+roslaunch voxblox_ros rgbd_dataset_d435i.launch
+rviz
+save:rosservice call /voxblox_node/generate_mesh "{}"
+
